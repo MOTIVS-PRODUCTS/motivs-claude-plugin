@@ -1,0 +1,25 @@
+{
+  "name": "motivs",
+  "displayName": "Motivs",
+  "version": "0.5.0",
+  "description": "Build and validate spreadsheet automations without sending source rows or cell values to the AI tool.",
+  "author": {
+    "name": "Motivs"
+  },
+  "homepage": "https://motivs.ai",
+  "repository": "https://github.com/MOTIVS-PRODUCTS/motivs-claude-plugin",
+  "license": "LicenseRef-Motivs-Plugin",
+  "icon": "./assets/logo.png",
+  "supportUrl": "https://motivs.ai/support",
+  "privacyPolicyUrl": "https://motivs.ai/privacy",
+  "termsOfServiceUrl": "https://motivs.ai/terms",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "keywords": [
+    "excel",
+    "automation",
+    "csv",
+    "reporting",
+    "mcp"
+  ]
+}

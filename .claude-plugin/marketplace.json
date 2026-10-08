@@ -1,0 +1,14 @@
+{
+  "name": "motivs",
+  "description": "The Motivs plugin: build and validate spreadsheet automations from protected examples.",
+  "owner": {
+    "name": "Motivs",
+    "url": "https://motivs.ai"
+  },
+  "plugins": [
+    {
+      "name": "motivs",
+      "source": "./"
+    }
+  ]
+}
