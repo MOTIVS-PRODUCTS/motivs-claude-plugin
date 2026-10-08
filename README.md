@@ -1,5 +1,7 @@
 # Motivs
 
+![Motivs](assets/logo.png)
+
 Motivs turns recurring Excel and CSV work into validated automations. You describe
 the outcome in plain language, Motivs builds the pipeline, runs it against examples
 you upload to the platform, and returns the report, plan, or decision output you
@@ -16,7 +18,7 @@ examples are never pasted into the conversation.
   They profile a workbook, scaffold a studio layout, and compare a workbook against
   an expected result. The skill tells Claude when to run them. They are plain
   standard library scripts with no third party imports.
-- `assets/logo.png`, the product mark used by the listing.
+- The product mark shown above, used by the listing.
 
 There are no hooks, commands, agents, or background processes in this package.
 
