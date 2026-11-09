@@ -10,9 +10,11 @@ No reviewer account, compliance attestation, or demo evidence is supplied here.
 ## Source and identity
 
 - Repository: `MOTIVS-PRODUCTS/motivs-claude-plugin`.
-- Plugin path: repository root, leave the portal path field empty.
+- Plugin path: `plugins/motivs`. Enter it explicitly in the portal.
+- Publisher: **MOTIVS OÜ**, the company behind [motivs.ai](https://motivs.ai).
+  Motivs is the product and company brand; keep the identifier and display name.
 - Plugin and marketplace name: `motivs`. Preserve this identity for updates.
-- Current package version: `0.7.2`; increase it for every shipped package change.
+- Current package version: `0.7.3`; increase it for every shipped package change.
 - First source candidate: merge the reviewed release PR, then validate the exact
   resulting commit on `main`. Record that commit and version with the submission.
 - The skill baseline is the production 0.7.1 integration, with the pin-authority
@@ -28,18 +30,20 @@ Run from the repository root:
 ```sh
 python3 scripts/check_package.py
 claude plugin validate . --strict
-claude plugin validate .claude-plugin/plugin.json --strict
+claude plugin validate plugins/motivs --strict
 ```
 
 The first validator command covers the marketplace manifest; the second checks
-the plugin manifest explicitly. Use a current Claude Code version that recognizes
+the installable plugin manifest explicitly. Use a current Claude Code version that recognizes
 the directory listing fields.
 Review the diff, license, README, public support and policy links, and runtime
 instructions. Keep private notes, credentials, OS metadata, generated ZIPs,
 dependency folders, and build artifacts out of the source repository.
 
-The Python checker uses tracked files plus non-ignored untracked files, so stage
-all intended files before release. It checks structure, endpoint identity, paths,
+The Python checker uses tracked files plus non-ignored untracked files inside
+`plugins/motivs`, so stage all intended files before release. It also checks that
+the root marketplace resolves to that folder. Maintainer tooling, CI and this guide
+stay outside the installed package; optional skill helpers remain inside it. It checks structure, endpoint identity, paths,
 file limits, icon format, reference existence, Python syntax, and selected access
 and privacy rules. It does not perform a security audit or the portal's full scan.
 
@@ -78,7 +82,7 @@ and evidence for each case. Keep credentials and protected contents out of evide
    [the developer portal](https://claude.ai/directory/manage). The first
    organization to submit this repository folder owns its directory listing.
 2. Connect a GitHub account with push access. Choose **Plugin bundle**, the
-   repository above, the empty root path, and the reviewed branch or tag. If using
+   repository above, the plugin path `plugins/motivs`, and the reviewed branch or tag. If using
    `main`, confirm the merged commit is the intended release.
 3. Run portal **Validate**. Resolve blocking findings and revalidate the new
    commit. A local pass does not replace portal validation or its security scan.
@@ -91,6 +95,30 @@ and evidence for each case. Keep credentials and protected contents out of evide
 6. Review the publication/update setting before submission. Record portal status,
    exact source commit, package version, and all remaining findings. Publish only
    after the responsible owner approves the concrete listing and review result.
+
+## Current portal findings
+
+The first validation of 0.7.2 passed structure checks and reported policy holds.
+The maintainer checker was then inside the installable root and read the manifest
+and icon for preflight checks. In 0.7.3 that checker and CI stay outside the plugin
+folder. The logo is still declared by the manifest and displayed with normal
+Markdown image syntax. No plugin code executes the logo.
+
+The name Motivs is intentional: it is the product and company brand of MOTIVS OÜ,
+whose public product website is https://motivs.ai. If the directory flags a similar
+name, provide this publisher context through its review process. Do not rename
+the brand, claim registered trademark rights, or claim organization verification
+without supporting evidence. Manual approval may still be required.
+
+Directory listing URLs and the icon are intentional metadata, even if a released
+Claude Code build ignores them at load time. Keep them. Optional skill helpers are
+readable Python source and remain declared in the README; a future rule about
+Verified publishers may require a separate packaging decision. Do not hide or
+mislabel executable helpers to evade review.
+
+After merge, update the source path in the existing form to `plugins/motivs` and
+choose Re-validate. A local check cannot establish that either hold disappeared.
+Do not submit a second listing or mark the package approved based on this change.
 
 ## Updates and rollback
 

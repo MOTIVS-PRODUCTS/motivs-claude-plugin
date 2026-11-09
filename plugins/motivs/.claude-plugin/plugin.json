@@ -1,10 +1,10 @@
 {
   "name": "motivs",
   "displayName": "Motivs",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Build and validate spreadsheet automations without sending source rows or cell values to the AI tool.",
   "author": {
-    "name": "Motivs"
+    "name": "MOTIVS OÜ"
   },
   "homepage": "https://motivs.ai",
   "repository": "https://github.com/MOTIVS-PRODUCTS/motivs-claude-plugin",
@@ -22,5 +22,5 @@
     "reporting",
     "mcp"
   ],
-  "documentationUrl": "https://github.com/MOTIVS-PRODUCTS/motivs-claude-plugin#readme"
+  "documentationUrl": "https://github.com/MOTIVS-PRODUCTS/motivs-claude-plugin/blob/main/plugins/motivs/README.md"
 }

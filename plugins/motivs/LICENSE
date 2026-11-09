@@ -1,0 +1,20 @@
+Copyright (c) 2026 Motivs. All rights reserved.
+
+This package is the Motivs plugin: one skill, its reference set, three optional
+helper scripts, and the configuration that points Claude at the Motivs MCP server.
+
+Permission is granted to any person to install this package in Claude and to use
+it, unmodified, to work with the Motivs service. Use of the service itself is
+governed by the Motivs terms at https://motivs.ai/terms.
+
+No other permission is granted. You may not modify, merge, publish, redistribute,
+sublicense, or sell this package or any part of it, in source or any other form,
+and you may not use its contents to build or operate a competing product, except
+under a separate written agreement signed by Motivs.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

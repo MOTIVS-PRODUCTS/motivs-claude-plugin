@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.3 - 2026-11-09
+
+- Ship only the plugin folder, excluding the maintainer package checker, CI
+  configuration and submission instructions from the installed distribution.
+- Keep the plugin identifier and display name Motivs; identify its publisher as
+  MOTIVS OÜ and link the product website for directory reviewer context.
+- Keep the same production MCP connection, skill, optional Python helpers, icon,
+  license and access rules. No platform or authentication behavior changes.
+
 ## 0.7.2 - 2026-11-09
 
 - Synchronize the skill with the production 0.7.1 integration: current resource
