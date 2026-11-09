@@ -10,7 +10,8 @@ import sys
 
 
 def check(root):
-    root = root.resolve()
+    repository = root.resolve()
+    root = repository / 'plugins/motivs'
     errors = []
 
     def require(condition, message):
@@ -18,10 +19,18 @@ def check(root):
             errors.append(message)
 
     result = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-        cwd=root, check=True, capture_output=True,
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z",
+         "--", "plugins/motivs"],
+        cwd=repository, check=True, capture_output=True,
     )
-    names = sorted(set(result.stdout.decode().split("\0")) - {""})
+    names = sorted({str(Path(name).relative_to('plugins/motivs'))
+                    for name in result.stdout.decode().split("\0") if name})
+    require(bool(names), "installable plugin folder is empty")
+    require(not (repository / '.claude-plugin/plugin.json').exists(),
+            "root must be a marketplace, not a second installable plugin")
+    require(not any((root / name).exists() for name in (
+        'scripts/check_package.py', '.github', 'PUBLISHING.md',
+    )), "maintainer tooling must stay outside the installed plugin")
     require(len(names) <= 512, "source package exceeds 512 files")
     seen = set()
     total_size = 0
@@ -56,11 +65,14 @@ def check(root):
     require(total_size < 50 * 1024 * 1024, "source package exceeds 50 MiB")
 
     manifest = json.loads((root / '.claude-plugin/plugin.json').read_text())
-    marketplace = json.loads((root / '.claude-plugin/marketplace.json').read_text())
+    marketplace = json.loads((repository / '.claude-plugin/marketplace.json').read_text())
     mcp = json.loads((root / '.mcp.json').read_text())
     require(manifest['name'] == marketplace['name'] == 'motivs', "plugin identity changed")
-    require(marketplace['plugins'] == [{'name': 'motivs', 'source': './'}],
-            "marketplace no longer points to this root plugin")
+    require(marketplace['plugins'] == [{'name': 'motivs', 'source': './plugins/motivs'}],
+            "marketplace must point to the isolated plugin folder")
+    require(manifest['displayName'] == 'Motivs', "product display name changed")
+    require(manifest['author']['name'] == marketplace['owner']['name'] == 'MOTIVS OÜ',
+            "publisher identity changed")
     require(re.fullmatch(r'\d+\.\d+\.\d+', manifest['version']), "invalid release version")
     require(manifest['skills'] == './skills/' and manifest['mcpServers'] == './.mcp.json',
             "unexpected component paths")
@@ -85,9 +97,13 @@ def check(root):
     prose = re.sub(r'```.*?```', '', readme, flags=re.S)
     require(len(prose.split()) >= 40, "README needs at least 40 words outside code blocks")
     require(f"**{manifest['version']}**" in readme, "README release version is stale")
+    require(f"**{manifest['version']}**" in (repository / 'README.md').read_text(),
+            "repository README release version is stale")
     require(f"## {manifest['version']} - " in (root / 'CHANGELOG.md').read_text(),
             "release missing from changelog")
     require(bool((root / 'LICENSE').read_text().strip()), "license missing")
+    require((root / 'LICENSE').read_bytes() == (repository / 'LICENSE').read_bytes(),
+            "installed license differs from repository license")
     skill_dir = root / 'skills/excel-workflow-automation-builder'
     skill = (skill_dir / 'SKILL.md').read_text()
     require(skill.startswith('---\nname: excel-workflow-automation-builder\n'),
