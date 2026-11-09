@@ -68,23 +68,23 @@ passwords or tokens into chat.
 
 ## Package contents
 
-- One skill, `excel-workflow-automation-builder`, and its references.
-- `scaffold_studio.py`: generates a starter automation module and manifest.
-- `check_platform_adapter.py`: checks the automation's backend adapter. It imports
-  the supplied module, so run it only on reviewed code in an appropriate environment.
-- `intelligence_kernels.py`: optional calculation helpers requiring NumPy and pandas.
-- A product icon, a proprietary license, and the production MCP configuration.
+- One instruction-only skill, `excel-workflow-automation-builder`, and its Markdown references.
+- A product icon and the proprietary license.
+- JSON metadata and the production remote MCP configuration.
 
-The helpers are optional and require a host that can execute Python. The scaffold
-and adapter checker use Python's standard library, but the generated automation
-may have additional runtime requirements. The skill keeps protected validation
-inside Motivs; the helpers are not a request to download examples into a local
-assistant environment. There are no hooks, slash commands, agents, local MCP
-servers, or automatic dependency installation in this package.
+There are no bundled executable files, Python helpers, hooks, slash commands,
+agents, local MCP servers, dependency installers, or background processes.
+The skill authors one self-contained automation source and manifest, uploads them
+through Motivs MCP, then uses protected isolated validation inside Motivs. It does
+not fetch omitted helpers or execute automation code in the assistant host.
+
+Python dependencies belong to the hosted automation, not to this plugin package.
+The platform validates them against its supported runner environment. Source and
+cell values stay in Motivs throughout execution and report checking.
 
 ## Package version
 
-Package version: **0.7.3**. See the [changelog](CHANGELOG.md).
+Package version: **0.7.4**. See the [changelog](CHANGELOG.md).
 The repository's [submission guide](https://github.com/MOTIVS-PRODUCTS/motivs-claude-plugin/blob/main/PUBLISHING.md)
 covers maintainer checks and the separate Anthropic review process.
 Maintainer checks and CI configuration are not installed with this plugin.

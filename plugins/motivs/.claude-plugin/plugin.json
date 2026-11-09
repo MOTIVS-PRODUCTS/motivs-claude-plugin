@@ -1,7 +1,7 @@
 {
   "name": "motivs",
   "displayName": "Motivs",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Build and validate spreadsheet automations without sending source rows or cell values to the AI tool.",
   "author": {
     "name": "MOTIVS OÜ"

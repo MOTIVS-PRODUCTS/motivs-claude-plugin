@@ -42,7 +42,7 @@ When Monte Carlo is justified:
 - Report percentiles or threshold frequencies, not false probabilities of success.
 - Record assumptions and seed in maintainer diagnostics.
 
-Use `scripts/intelligence_kernels.py` as vetted build-time reference for reproducible sensitivity and empirical bootstrap patterns. Copy only required functions into the notebook.
+Implement only the selected sensitivity or empirical resampling method inside the self-contained notebook. Preserve the confirmed bounds, dependencies and seed, and run the reproducibility and decision-relevance checks inside Motivs.
 
 ## Decision-Relevance Gate
 

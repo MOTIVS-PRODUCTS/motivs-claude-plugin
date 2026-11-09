@@ -51,7 +51,7 @@ Do not add `src/`, package modules, page folders, engine folders, config trees, 
 
 ## Reliability Stack Policy
 
-Use the smallest stack that can reliably turn a non-technical Excel request into repeatable local data-engineering work.
+Use the smallest stack that can reliably turn a non-technical Excel request into repeatable platform-hosted data-engineering work.
 
 Default runtime libraries inside the notebook:
 
@@ -73,15 +73,18 @@ Optional only when the workflow explicitly needs them:
 
 Do not add Streamlit, Prefect, Great Expectations, cloud services, databases, package layouts, or orchestration frameworks inside an automation. The Motivs runner already supplies Marimo, pandas, openpyxl, DuckDB, PyArrow, XlsxWriter, and NumPy; requirements outside that allowlist are rejected.
 
-## Bundled Build Helpers
+## Instruction-Only Package
 
-Use the bundled scripts when the current host can execute local Python. They are optional build-time accelerators, not part of the hosted automation runtime:
+This package contains instructions and references, not local executable helpers.
+Author the self-contained automation source and manifest from the confirmed
+metadata-only contract. Use the bundled prose references for architecture,
+methods, checks, and platform requirements.
 
-- `scripts/scaffold_studio.py`: generate the initial `automation.py`, `manifest.json`, requirements, and validation artifact skeleton so the agent does not repeatedly rewrite the platform contract.
-
-Do not treat these helpers as proof by themselves. The profiler samples structure and has scan limits; the comparison helper is not a formula calculation engine and does not prove macros, links, charts, pivots, or every style are preserved. The scaffold is a starting point whose generic transformation must be replaced with confirmed workflow logic.
-
-If the host cannot run local Python, continue through the Motivs metadata-only contract and protected platform validation. Never make local helper availability a requirement for the user.
+Do not download, reconstruct, or execute omitted helper scripts, install local
+dependencies, or run the generated automation in the assistant host. Source and
+adapter checks, protected-example execution, and result verification run inside
+Motivs through the authenticated MCP workflow. Local execution is not a readiness
+requirement and must never be claimed as performed when it was not.
 
 ## Motivs Platform Runtime
 
@@ -277,14 +280,14 @@ Use this internal notebook layout:
 4. Ask business-language questions only for material ambiguity. Label inferred rules as `Proposed rule - needs confirmation`, then call `commit_build_brief` before implementation.
 5. Define the smallest reliable set of in-notebook contracts and rules. Avoid premature abstractions. Prefer private normalized regions from `parameters["_motivs"]`, and process only the source/region selections committed in the spec—never concatenate every discovered region blindly. Use raw paths only where workbook structure must be inspected or safely copied.
 6. Check dependency capabilities inside the notebook. Use DuckDB for large-data and reconciliation patterns when it materially improves reliability.
-7. Build one notebook module with the required `run_automation` backend adapter and a platform-rendered `manifest.json`. Use `scripts/scaffold_studio.py` as the starting skeleton when executable, then replace its generic logic. Keep repeated logic as functions inside the notebook, not separate modules.
+7. Author one notebook module with the required `run_automation` backend adapter and a platform-rendered `manifest.json` directly from the confirmed contract and bundled architecture/UI references. Keep repeated logic as functions inside the notebook, not separate modules.
 7a. Declare `verification` in the manifest before writing the automation code, per `references/platform-ui-contract.md`: a `grain` for a single-table result, or a grain per sheet under `verification.sheets` for a workbook. State it from the task description, never from a finished output. Omit it only when duplicate rows are genuinely legitimate, and say so in your report. A manifest without it caps every result check at yellow: the standard frame still traces identifiers and coverage, but duplicates and arithmetic stay unchecked, green and red are out of reach, and the upload response will carry a warning; do not ship that silently.
 
 7b. Declare the arithmetic too. A grain alone caps the result check at `Shape only`, because shape says nothing about whether the numbers add up. Match the task against `references/verification-catalogue.md`, which lists the recognisable report forms, the check each one owes, the tolerance to use and what that form cannot prove. Declare the summary sheet too: it is a card of totals rather than a table, and the totals printed at the top of a report are the numbers a reader actually acts on. Write values rather than formulas into any column a check measures: a formula written by a library carries no computed value, so the check stands down. If no form fits, declare none and name the unchecked arithmetic in your report.
 8. Implement validations before final output generation. Fail clearly rather than guess. For advanced capabilities, apply their reference-specific baselines, feasibility, sensitivity, uncertainty, and fallback gates.
 9. Add lightweight self-tests inside the notebook. Prefer focused synthetic checks over broad generated test suites. Protected historical reproduction and expected-workbook comparison run inside Motivs after upload.
-10. Run `python scripts/check_platform_adapter.py automation.py` and fix what it reports. This is the check Motivs itself runs on a platform-rendered automation: the module imports, and `run_automation(input_paths, output_dir, parameters)` is callable with that signature. A platform automation is a module with an optional maintainer view, so `marimo check --strict` does not apply to it and the scaffold is not a Marimo notebook; run that check only for an automation whose cells genuinely live at module level.
-11. Run the notebook headlessly or locally enough to verify it launches when possible.
+10. Review the source for a top-level callable `run_automation(input_paths, output_dir, parameters)` adapter before upload. This is a source review, not an execution result. Use the exact candidate's platform validation in step 14 to establish whether import, adapter, static, and protected execution checks pass; repair any reported defect as a new immutable version.
+11. Keep execution inside Motivs. Do not launch the generated notebook or install its dependencies in the assistant host. If platform validation is unavailable, report the blocker and leave the candidate unverified.
 12. Create platform upload artifacts: `automation.py`, `requirements.txt`, `manifest.json`, `profile.json` where available, and `validation_report.json`.
 13. Upload to the existing automation with the current `contract_revision_id`. In collaboration workspaces, also pass the selected exact `parent_version_id` and `change_summary`; never infer the parent from the newest version number.
 14. Queue protected isolated validation with `validate_automation`; poll `get_run` until it completes. The run carries `certificate`: the version measured against its own declaration on the protected examples, with counts and column names only, cell values stay inside Motivs. Read every entry whose outcome is `failed` or `questioned` as a defect list: fix the code, upload a new immutable version, validate again, and repeat until no failed or questioned entry is attributable to the code. A doubt that is a property of the data itself may stand; name it in your report. Never edit the `verification` declaration to make a check agree: it is the norm the code is measured against, and reshaping it to fit the output would check the code against itself. Change it only when the meaning of the result genuinely changed, and say so explicitly. Use `create_repair_package`, always with the `run_id` of the run you are repairing, when a correction needs the full evidence: it answers with your own source, the manifest and the contract beside that run's feedback. An omitted run ID is not a reliable repair target; always identify the failed run explicitly. The loop has a budget: when the third validation round still ends failed or questioned for the same reason, stop repairing and surface it. Tell the user in their language what stands in the way — which check disagrees, on which columns, and what would resolve it: an answer to a concrete question, a deliberate declaration change, or data the file does not carry. Ask that one concrete question instead of attempting a fourth guess; a silent endless repair loop wastes the user's time and hides the real blocker.
@@ -321,7 +324,7 @@ The automation is ready only when:
 - Historical examples or supplied sample data have been inspected.
 - Material business rules are confirmed or clearly marked as unresolved.
 - Platform-rendered execution passes through `/api/automations/{automation_id}/platform-runs`.
-- `scripts/check_platform_adapter.py` passes on the staged `automation.py`. No documented deviation stands in for it.
+- The exact uploaded candidate passes the platform's source/adapter checks and protected isolated validation. A source review or an unrun local check never stands in for that result.
 - In-notebook self-tests pass.
 - Generated outputs open successfully.
 - Generated outputs are reopened and validated for required sheets, row/control counts, formulas/macros where relevant, and output hashes.

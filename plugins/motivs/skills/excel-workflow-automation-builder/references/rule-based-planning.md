@@ -30,7 +30,7 @@ Use simple, inspectable methods before optimization:
 - Proportional allocation with a documented residual rule.
 - Threshold-based approval or exception routing.
 
-Use `scripts/intelligence_kernels.py` as vetted build-time reference for bounded allocation and weighted comparison patterns. Copy only the required functions into the self-contained notebook; never import the helper at platform runtime.
+Implement only the required allocation or comparison functions inside the self-contained notebook. Check caps, floors, conservation, deterministic ordering and rounding residuals against the produced plan inside Motivs.
 
 ## Feasibility Before Presentation
 
