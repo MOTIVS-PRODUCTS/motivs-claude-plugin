@@ -29,7 +29,7 @@ Prefer methods in this order:
 5. Dominance or Pareto comparison when no single weighting is approved.
 6. Scenario-sensitive comparison only when uncertainty can change the ranking.
 
-Use `scripts/intelligence_kernels.py` as vetted build-time reference for transparent weighted comparison. Copy only required functions into the self-contained notebook.
+Implement only the confirmed comparison method as transparent functions inside the self-contained notebook. Validate it against the hard-disqualifier, direction, missing-value, tie and sensitivity cases below inside Motivs.
 
 ## Dirty-Data And Fairness Controls
 

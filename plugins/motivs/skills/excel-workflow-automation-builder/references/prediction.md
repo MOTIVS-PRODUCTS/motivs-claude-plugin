@@ -44,7 +44,7 @@ Use only methods needed by the evidence:
 - Simple linear trend projection when trend continuation is plausible.
 - Explicit assumption-based projection when history is not predictive.
 
-Use `scripts/intelligence_kernels.py` as the vetted build-time reference. Copy only selected functions into the self-contained notebook; never import the helper at runtime. Do not add neural networks, automated ML, or large modeling libraries.
+Implement only the selected methods as transparent functions inside the self-contained notebook. Evaluate them inside Motivs against the temporal baselines and self-checks below. Do not add neural networks, automated ML, or large modeling libraries.
 
 ## Temporal Evaluation
 

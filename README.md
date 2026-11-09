@@ -6,8 +6,9 @@ The plugin identifier remains `motivs`; its display name remains **Motivs**.
 
 The installable package is [plugins/motivs](plugins/motivs). Its
 [README](plugins/motivs/README.md) describes the production MCP connection, OAuth,
-automation workflow, data boundary and optional Python helpers. This repository is
-being prepared for its first Anthropic directory submission; it is not yet an
+automation workflow and data boundary. The installed package contains no local
+executable helpers; execution and validation happen inside Motivs through MCP.
+This repository is being prepared for its first Anthropic directory submission; it is not yet an
 approved listing.
 
 ## Install
@@ -23,10 +24,11 @@ For directory validation, set **Plugin path** to `plugins/motivs`.
 
 ## Repository layout
 
-- `plugins/motivs/`: the complete installable plugin, version **0.7.3**.
+- `plugins/motivs/`: the complete installable plugin, version **0.7.4**.
 - `.claude-plugin/marketplace.json`: repository marketplace manifest.
 - `scripts/check_package.py`: maintainer-only package checks, never installed.
 - `.github/workflows/package.yml`: read-only CI, never installed.
+- `development/helpers/`: original optional Python utilities for maintainers only, never installed or fetched by the skill.
 - [PUBLISHING.md](PUBLISHING.md): submission steps and manual acceptance checks.
 - [Changelog](plugins/motivs/CHANGELOG.md): package changes.
 - [License](LICENSE): the same proprietary license included in the plugin.

@@ -29,16 +29,19 @@ Include a `run_self_checks()` function that verifies:
 
 Expose a `Run self-checks` control or run checks automatically before final output generation.
 
-## External Checks
+## Platform Source And Execution Checks
 
-Run what the environment supports:
+Review the source for the required top-level backend adapter before uploading.
+That review does not prove import or execution success. Queue isolated validation
+of the exact uploaded candidate through Motivs MCP, poll its run to a terminal
+state, and use the returned structured source, adapter, execution and comparison
+feedback. Never claim a local checker passed or run the generated automation in
+the assistant host to replace platform validation.
 
-```bash
-python -m marimo check --strict automation.py
-python -m marimo run automation.py --headless --host 127.0.0.1 --port <free-port>
-```
-
-Also open generated Excel files with Python to confirm they are readable. For formula-dependent reports, verify recalculation with Microsoft Excel, LibreOffice, or a documented external method; otherwise mark recalculation as not verified.
+Reopen and inspect generated workbooks inside the automation's own platform-side
+self-checks. For formula-dependent reports, report whether a supported calculation
+engine actually recalculated formulas; without that evidence, mark recalculation
+as not verified. Do not download protected outputs into the assistant for checking.
 
 ## Platform Upload Checks
 

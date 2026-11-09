@@ -14,7 +14,7 @@ No reviewer account, compliance attestation, or demo evidence is supplied here.
 - Publisher: **MOTIVS OÜ**, the company behind [motivs.ai](https://motivs.ai).
   Motivs is the product and company brand; keep the identifier and display name.
 - Plugin and marketplace name: `motivs`. Preserve this identity for updates.
-- Current package version: `0.7.3`; increase it for every shipped package change.
+- Current package version: `0.7.4`; increase it for every shipped package change.
 - First source candidate: merge the reviewed release PR, then validate the exact
   resulting commit on `main`. Record that commit and version with the submission.
 - The skill baseline is the production 0.7.1 integration, with the pin-authority
@@ -43,8 +43,10 @@ dependency folders, and build artifacts out of the source repository.
 The Python checker uses tracked files plus non-ignored untracked files inside
 `plugins/motivs`, so stage all intended files before release. It also checks that
 the root marketplace resolves to that folder. Maintainer tooling, CI and this guide
-stay outside the installed package; optional skill helpers remain inside it. It checks structure, endpoint identity, paths,
-file limits, icon format, reference existence, Python syntax, and selected access
+stay outside the installed package. Original Python helpers stay in
+`development/helpers` for maintainers only and are not referenced or fetched by
+the installed skill. It checks structure, endpoint identity, paths,
+file limits, icon format, reference existence, allowed text/image types and selected access
 and privacy rules. It does not perform a security audit or the portal's full scan.
 
 ## Live acceptance checklist
@@ -111,12 +113,22 @@ the brand, claim registered trademark rights, or claim organization verification
 without supporting evidence. Manual approval may still be required.
 
 Directory listing URLs and the icon are intentional metadata, even if a released
-Claude Code build ignores them at load time. Keep them. Optional skill helpers are
-readable Python source and remain declared in the README; a future rule about
-Verified publishers may require a separate packaging decision. Do not hide or
-mislabel executable helpers to evade review.
+Claude Code build ignores them at load time. Keep them.
 
-After merge, update the source path in the existing form to `plugins/motivs` and
+The portal subsequently refused local executable files for the current
+non-Verified publisher. Version 0.7.4 removes the three Python helpers from the
+installed package and replaces their workflow dependencies with platform-side
+validation. They are not renamed to text, embedded as complete runnable programs,
+or fetched from another location by the skill. Original maintainer utilities live
+outside the submitted plugin folder. No Verified-organization status is claimed.
+
+Only supported Markdown, text, JSON, YAML and image files belong in the plugin
+folder. Text must be UTF-8, contain no NUL bytes and not start with a shebang. Do
+not include package-manager configuration, dependency installers or executable
+permission bits. The source checker rejects these regressions before CI passes.
+The portal result remains authoritative; a local pass is not clearance.
+
+After merge, confirm the source path in the existing form to `plugins/motivs` and
 choose Re-validate. A local check cannot establish that either hold disappeared.
 Do not submit a second listing or mark the package approved based on this change.
 

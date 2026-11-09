@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.4 - 2026-11-09
+
+- Remove the three local executable helpers from the installable directory package
+  to comply with the file policy applied to non-Verified publishers.
+- Replace helper-dependent instructions with direct notebook authoring and exact
+  candidate validation inside Motivs. Do not fetch omitted helpers or execute
+  generated automation code in the assistant host.
+- Keep original helper source in the separate maintainer development folder.
+- Enforce allowed file types, UTF-8 text, no NUL bytes or shebangs, no executable
+  permission bits, and no package-manager configuration in the installed package.
+- Preserve Motivs branding, the production OAuth/MCP endpoint, data boundaries,
+  explicit pin authority and protected platform validation requirements.
+
 ## 0.7.3 - 2026-11-09
 
 - Ship only the plugin folder, excluding the maintainer package checker, CI
