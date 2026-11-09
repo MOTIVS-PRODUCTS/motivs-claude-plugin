@@ -18,16 +18,16 @@ Motivs agents connect only through the plugin-provided Streamable HTTP MCP serve
 4. Resolve only material questions surfaced by `workbook_interpretation`, `business_meaning`, and `automation_spec`. Never request protected source rows or cell values.
 5. Call `commit_build_brief` with the confirmed objective, source/region selections, material business entity and row grain when relevant, rules, output requirements, acceptance checks, and `confirmation_provenance.source` describing where the confirmation came from. Continue from the new contract revision it returns.
 6. Build one self-contained `automation.py` plus a platform-rendered manifest. Bind each file input to `source_contract_ids`, set `runtime_contract` to `workbook-interpretation-v1`, and consume normalized region paths from `parameters["_motivs"]` when present.
-7. Call `add_automation_version` with the exact committed `contract_revision_id`. This creates an unpublished candidate and does not replace the current working version.
+7. Follow `collaboration-and-versions.md`: select the exact available source ID, then call `add_automation_version` with that `parent_version_id`, a factual `change_summary`, and the exact committed `contract_revision_id`. An empty draft has no parent. This creates a candidate and does not change the working pin.
 8. Call `validate_automation` with the returned automation/version IDs.
-9. Poll `get_run` until `passed`, `failed`, or `stopped`. This tool returns structured, metadata-safe feedback rather than raw logs. A passing newest/current-contract candidate is promoted atomically.
-10. On failure, the prior published version remains active. Call `create_repair_package`, correct the source, and upload a new candidate. Never mutate an existing version.
+9. Poll `get_run` until `passed`, `failed`, or `stopped`. This tool returns structured, metadata-safe feedback rather than raw logs. In collaboration workspaces a passed candidate leaves the working pin unchanged; a user with current `access.can_pin` (the automation owner or workspace Owner) must explicitly select the version used for runs in Motivs. Legacy publication behavior applies only when the connection flag is false.
+10. On failure, the prior working version remains unchanged. Call `create_repair_package`, correct the source, and upload a new candidate. Never mutate an existing version.
 
 ## Tool Scope
 
 - Read operations require the corresponding `automations:read`, `runs:read`, or `artifacts:read` scope.
-- Source and metadata writes require `automations:write` and an owner, admin, or builder role.
-- Validation requires `runs:write`.
+- Source and metadata writes require `automations:write` and current manage access to that automation in collaboration workspaces. Legacy role checks remain server-side.
+- Validation requires `runs:write` and current manage access; ordinary use and folder creation do not grant validation authority.
 - Reading metadata-only contracts requires `context:read`; creating protected intake snapshots requires `context:write`.
 
 ## Data Boundary

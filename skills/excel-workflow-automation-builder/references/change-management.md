@@ -20,3 +20,7 @@ When inputs, templates, or rules change:
 ## Report To User
 
 Explain exactly what changed, what was retested, whether historical outputs still match, and whether any manual decision remains.
+
+## Immutable platform versions
+
+Use `collaboration-and-versions.md` to select the exact parent, preserve its source identity, and record a factual change summary. Upload a new immutable candidate rather than editing an existing platform version. Validation and the working pin are separate in collaboration workspaces; archive restoration and pin changes are explicit actions in Motivs.

@@ -49,8 +49,8 @@ Before release:
 - Create `requirements.txt`.
 - Create `profile.json` only for agent-owned synthetic or deliberately shared inputs; never reconstruct protected platform profiles.
 - Create `validation_report.json` with checks run, checks skipped, blockers, and formula recalculation status.
-- Commit the confirmed build brief, upload artifacts through `add_automation_version` with that exact `contract_revision_id`, then queue protected isolated validation and poll the durable run record. The upload is only a candidate; report publication only after the platform promotes a passing newest/current-contract version.
-- Confirm the response includes automation ID, version ID, contract revision ID, platform URL, and validation status.
+- Commit the confirmed build brief, upload artifacts through `add_automation_version` with that exact `contract_revision_id`, then queue protected isolated validation and poll the durable run record. The upload is only a candidate; report validation separately from the working pin. In collaboration workspaces a passed candidate is not used for runs until a user with current `access.can_pin` (the automation owner or workspace Owner) explicitly selects it in Motivs.
+- Confirm automation ID, exact source and candidate IDs/numbers, change summary, contract revision ID, Motivs URL, validation status, and current pin. Never claim the candidate is used for runs without verifying the pin.
 - Confirm protected-example execution passes and protected finished-report comparison passes when an example exists.
 - Confirm the platform version validation status is `passed`, or report blockers and do not claim readiness.
 - Confirm ordinary reporting validation omits `analysis_summary` and retains its previous response shape.
