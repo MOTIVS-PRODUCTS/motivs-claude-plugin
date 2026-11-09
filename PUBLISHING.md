@@ -28,9 +28,12 @@ Run from the repository root:
 ```sh
 python3 scripts/check_package.py
 claude plugin validate . --strict
+claude plugin validate .claude-plugin/plugin.json --strict
 ```
 
-Use a current Claude Code version that recognizes the directory listing fields.
+The first validator command covers the marketplace manifest; the second checks
+the plugin manifest explicitly. Use a current Claude Code version that recognizes
+the directory listing fields.
 Review the diff, license, README, public support and policy links, and runtime
 instructions. Keep private notes, credentials, OS metadata, generated ZIPs,
 dependency folders, and build artifacts out of the source repository.

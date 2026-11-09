@@ -87,6 +87,7 @@ Package version: **0.7.2**. See [changes](CHANGELOG.md) and the
 ```sh
 python3 scripts/check_package.py
 claude plugin validate . --strict
+claude plugin validate .claude-plugin/plugin.json --strict
 ```
 
 These checks do not replace live workflow tests or Anthropic's portal validation.
